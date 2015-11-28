@@ -1,0 +1,45 @@
+{
+  "name": "saffy",
+  "version": "0.1.0",
+  "description": "Safe getters and setters in Javascript",
+  "main": "./dist/saffy.js",
+  "scripts": {
+    "test": "mocha-phantomjs -s localToRemoteUrlAccessEnabled=true -s webSecurityEnabled=false --reporter spec test/runner.html",
+    "start": "npm run serve | npm run dev",
+    "serve": "./node_modules/.bin/http-server -p 8080",
+    "dev": "webpack-dev-server --progress --colors --port 8090",
+    "watch": "webpack --progress --colors --watch",
+    "build": "webpack && webpack -p --output-file saffy.min.js",
+    "amend": "git add . && git commit --amend --reuse-message=HEAD",
+    "push": "git push --tags && git push",
+    "release": "bower version patch -f && npm version patch --force --no-git-tag-version && npm run build && npm run amend && npm run push && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zzarcon/saffy.git"
+  },
+  "keywords": [
+    "saffy",
+    "safe",
+    "get",
+    "set",
+    "getter",
+    "setter"
+  ],
+  "author": "zzarcon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zzarcon/saffy/issues"
+  },
+  "homepage": "https://github.com/zzarcon/saffy",
+  "devDependencies": {
+    "babel-core": "^5.4.3",
+    "babel-loader": "^5.1.2",
+    "chai": "^3.4.1",
+    "http-server": "~0.7.1",
+    "mocha": "^2.3.4",
+    "mocha-phantomjs": "^4.0.1",
+    "webpack": "~1.4.4",
+    "webpack-dev-server": "~1.6.5"
+  }
+}

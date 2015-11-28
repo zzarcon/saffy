@@ -1,0 +1,27 @@
+{
+  "name": "saffy",
+  "main": "dist/saffy.js",
+  "version": "0.1.0",
+  "homepage": "https://github.com/zzarcon/saffy",
+  "authors": [
+    "zzarcon"
+  ],
+  "license": "MIT",
+  "ignore": [
+    ".travis.yml",
+    "example.js",
+    "index.html",
+    "saffy.js",
+    "package.json",
+    "README.md",
+    "webpack.config.js",
+    "node_modules",
+    "bower_components",
+    "test",
+    "md",
+    "lib"
+  ],
+  "devDependencies": {
+    "zepto": "~1.1.4"
+  }
+}
