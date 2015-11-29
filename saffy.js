@@ -15,9 +15,7 @@ var get = (obj, keyName, defaultValue) => {
     return obj[keyName] ? obj[keyName] : defaultValue;
   }
 
-  let firstProp = properties.shift();
-  let nextObj = obj[firstProp];
-  let nextProps = properties.join('.');
+  let {nextObj, nextProps} = getNextValues(obj, properties);
 
   return nextObj ? get(nextObj, nextProps, defaultValue) : defaultValue;
 };
@@ -40,11 +38,18 @@ var set = (obj, keyName, value) => {
     return value;
   }
 
-  let firstProp = properties.shift();
-  let nextObj = obj[firstProp];
-  let nextProps = properties.join('.');
-
+  let {nextObj, nextProps} = getNextValues(obj, properties);
+  
   return isObject(nextObj) ? set(nextObj, nextProps, value) : value;
+};
+
+var getNextValues = (obj, properties) => {
+  let first = properties.shift();
+
+  return {
+    nextObj: obj[first],
+    nextProps: properties.join('.')
+  };
 };
 
 var isString = (value) => {
