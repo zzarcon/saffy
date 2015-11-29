@@ -30,6 +30,14 @@ describe('Saffy', function() {
       expect(saffy.get(dummy, 'user.country')).to.be.undefined;
       expect(saffy.get(dummy, 'bar.country')).to.be.undefined;
     });
+
+    it.only("Returns a default value if the property doesn't exist", function() {
+      var defaultValue = 'foo';
+
+      expect(saffy.get(dummy, 'bar', defaultValue)).to.be.equal(defaultValue);
+      expect(saffy.get(dummy, 'user.country', defaultValue)).to.be.equal(defaultValue);
+      expect(saffy.get(dummy, 'bar.country', defaultValue)).to.be.equal(defaultValue);
+    });
   });
 
   describe('Set', function() {
