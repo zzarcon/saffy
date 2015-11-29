@@ -85,16 +85,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return obj[keyName] ? obj[keyName] : defaultValue;
 	    }
 
-	    var firstProp = properties.shift();
-	    var nextObj = obj[firstProp];
-	    var nextProps = properties.join('.');
+	    var _getNextValues = getNextValues(obj, properties);
 
+	    var nextObj = _getNextValues.nextObj;
+	    var nextProps = _getNextValues.nextProps;
 	    if (nextObj) {
 	      _x = nextObj;
 	      _x2 = nextProps;
 	      _x3 = defaultValue;
 	      _again = true;
-	      properties = firstProp = nextObj = nextProps = undefined;
+	      properties = _getNextValues = nextObj = nextProps = undefined;
 	      continue _function;
 	    } else {
 	      return defaultValue;
@@ -128,21 +128,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return value;
 	    }
 
-	    var firstProp = properties.shift();
-	    var nextObj = obj[firstProp];
-	    var nextProps = properties.join('.');
+	    var _getNextValues2 = getNextValues(obj, properties);
 
+	    var nextObj = _getNextValues2.nextObj;
+	    var nextProps = _getNextValues2.nextProps;
 	    if (isObject(nextObj)) {
 	      _x4 = nextObj;
 	      _x5 = nextProps;
 	      _x6 = value;
 	      _again2 = true;
-	      properties = firstProp = nextObj = nextProps = undefined;
+	      properties = _getNextValues2 = nextObj = nextProps = undefined;
 	      continue _function2;
 	    } else {
 	      return value;
 	    }
 	  }
+	};
+
+	var getNextValues = function getNextValues(obj, properties) {
+	  var first = properties.shift();
+
+	  return {
+	    nextObj: obj[first],
+	    nextProps: properties.join('.')
+	  };
 	};
 
 	var isString = function isString(value) {
