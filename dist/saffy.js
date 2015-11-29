@@ -59,6 +59,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *  
 	 * @param  {Object} obj     
 	 * @param  {String} keyName 
+	 * @param  {Mixed} defaultValue 
 	 * @return {Mixed}         
 	 */
 	'use strict';
@@ -67,20 +68,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	var _arguments2 = arguments;
-	var get = function get(_x, _x2) {
+	var get = function get(_x, _x2, _x3) {
 	  var _again = true;
 
 	  _function: while (_again) {
 	    var obj = _x,
-	        keyName = _x2;
+	        keyName = _x2,
+	        defaultValue = _x3;
 	    _again = false;
 
-	    if (_arguments2.length < 2 || typeof keyName !== 'string') return;
+	    if (_arguments2.length < 2 || !isString(keyName)) return;
 
 	    var properties = keyName.split('.');
 
 	    if (properties.length === 1) {
-	      return obj[keyName];
+	      return obj[keyName] ? obj[keyName] : defaultValue;
 	    }
 
 	    var firstProp = properties.shift();
@@ -90,16 +92,66 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (nextObj) {
 	      _x = nextObj;
 	      _x2 = nextProps;
+	      _x3 = defaultValue;
 	      _again = true;
 	      properties = firstProp = nextObj = nextProps = undefined;
 	      continue _function;
 	    } else {
-	      return undefined;
+	      return defaultValue;
 	    }
 	  }
 	};
 
-	var set = function set() {};
+	/**
+	 * TODO: Check if arguments are valid.
+	 * 
+	 * @param  {Object} obj     
+	 * @param  {String} keyName 
+	 * @param  {Mixed} value   
+	 * @return {Mixed}  Returns the passed value
+	 */
+	var set = function set(_x4, _x5, _x6) {
+	  var _again2 = true;
+
+	  _function2: while (_again2) {
+	    var obj = _x4,
+	        keyName = _x5,
+	        value = _x6;
+	    _again2 = false;
+
+	    if (_arguments2.length < 3 || !isString(keyName)) return;
+
+	    var properties = keyName.split('.');
+
+	    if (properties.length === 1) {
+	      obj[keyName] = value;
+	      return value;
+	    }
+
+	    var firstProp = properties.shift();
+	    var nextObj = obj[firstProp];
+	    var nextProps = properties.join('.');
+
+	    if (isObject(nextObj)) {
+	      _x4 = nextObj;
+	      _x5 = nextProps;
+	      _x6 = value;
+	      _again2 = true;
+	      properties = firstProp = nextObj = nextProps = undefined;
+	      continue _function2;
+	    } else {
+	      return value;
+	    }
+	  }
+	};
+
+	var isString = function isString(value) {
+	  return typeof value === 'string';
+	};
+
+	var isObject = function isObject(value) {
+	  return typeof value === 'object';
+	};
 
 	exports['default'] = {
 	  get: get,
