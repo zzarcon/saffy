@@ -1,6 +1,6 @@
 {
   "name": "saffy",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Safe getters and setters in Javascript",
   "main": "./dist/saffy.js",
   "scripts": {
