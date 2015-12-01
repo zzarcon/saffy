@@ -65,6 +65,11 @@ describe('Saffy', function() {
     it("Only set the value if the keyName it's an object", function() {
       saffy.set(dummy, 'foo.country', value);
       expect(dummy.foo.country).to.be.equal(undefined);
+
+      var nully = {a: null};
+      saffy.set(nully, 'a.b', 23);
+
+      expect(nully.a).to.be.null;
     });
 
     it('Returns the value of the setted property', function() {
