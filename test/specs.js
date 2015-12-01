@@ -58,7 +58,19 @@ describe('Saffy', function() {
     });
 
     it('#lastObject', function() {
+      var car = dummy.cars[2];
+      var meal = dummy.food[1][1];
 
+      expect(get(dummy, 'cars.lastObject')).to.be.equal(car);
+      expect(get(dummy, 'cars.lastObject.lastObject')).to.be.undefined;
+      expect(get(dummy, 'food.lastObject.lastObject')).to.be.equal(meal);
+    });
+
+    it.only('#length', function() {
+      var len = dummy.cars.length;
+
+      expect(get(dummy, 'cars.length')).to.be.equal(len);
+      expect(get(dummy, 'foo.length')).to.be.undefined;
     });
   });
 

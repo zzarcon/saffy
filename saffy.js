@@ -56,19 +56,29 @@ var getNextValues = (obj, properties) => {
 };
 
 /**
+ * Contains logic to return the value of the properties
  * 
  * @param  {Obj} obj  
  * @param  {String} prop 
  * @return {Mixed}      
  */
 var getProp = (obj, prop) => {
-  let val = obj[prop];
+  let isArray = Array.isArray(obj);
+  let len = obj.length;
   
-  if (prop === 'firstObject' && Array.isArray(obj)) {
-    val = obj[0];
+  if (!isArray) return obj[prop];
+
+  if (prop === 'firstObject') {
+    return obj[0];
   }
 
-  return val;
+  if (prop === 'lastObject') {
+    return obj[len - 1];
+  }
+
+  if (prop === 'length') {
+    return len;
+  }
 };
 
 var isString = (value) => {
