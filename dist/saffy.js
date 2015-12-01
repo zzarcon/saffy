@@ -164,27 +164,73 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	/**
+	 * Contains logic to return the value of the properties
 	 * 
 	 * @param  {Obj} obj  
 	 * @param  {String} prop 
 	 * @return {Mixed}      
 	 */
 	var getProp = function getProp(obj, prop) {
-	  var val = obj[prop];
+	  var isArray = Array.isArray(obj);
+	  var len = obj.length;
 
-	  if (prop === 'firstObject' && Array.isArray(obj)) {
-	    val = obj[0];
+	  if (isArray) {
+	    if (prop === 'firstObject') {
+	      return obj[0];
+	    }
+
+	    if (prop === 'lastObject') {
+	      return obj[len - 1];
+	    }
+
+	    if (prop === 'length') {
+	      return len;
+	    }
+
+	    if (prop.indexOf('[') > -1) {
+	      prop = prop.replace('[', '').replace(']', '');
+	    }
 	  }
 
-	  return val;
+	  return obj[prop];
 	};
 
 	var isString = function isString(value) {
 	  return typeof value === 'string';
 	};
 
+	/**
+	 * Check and clean params before calling the "get" method
+	 * 
+	 * TODO: Use rest args
+	 * TODO: Check if is a valid keyName
+	 */
+	var getWrapper = function getWrapper(obj, keyName, defaultValue) {
+	  var isValid = isKeyNameValid(keyName);
+	  var wantsArrayItem = keyName.indexOf('[') > -1;
+
+	  if (wantsArrayItem) {
+	    keyName = keyName.split('[').map(function (k, i) {
+	      if (i === 0) return k;
+
+	      return '.[' + k;
+	    }).join('');
+	  }
+
+	  return get(obj, keyName, defaultValue);
+	};
+
+	/**
+	 * Implement...
+	 * @param  {String} keyName 
+	 * @return {Boolean}         
+	 */
+	var isKeyNameValid = function isKeyNameValid(keyName) {
+	  return true;
+	};
+
 	exports['default'] = {
-	  get: get,
+	  get: getWrapper,
 	  set: set
 	};
 	module.exports = exports['default'];
