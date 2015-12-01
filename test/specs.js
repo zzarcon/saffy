@@ -28,6 +28,25 @@ describe('Saffy', function() {
 
     });
 
+    it.skip('Check property name correctness', function() {
+      expect(get(dummy, 'food.')).to.be.undefined;
+      expect(get(dummy, 'food..')).to.be.undefined;
+      expect(get(dummy, 'food.[')).to.be.undefined;
+      expect(get(dummy, 'food.]')).to.be.undefined;
+      expect(get(dummy, 'food.[]')).to.be.undefined;
+      expect(get(dummy, 'food[]')).to.be.undefined;
+      expect(get(dummy, 'food[][]')).to.be.undefined;
+      expect(get(dummy, 'food[].[]')).to.be.undefined;
+      expect(get(dummy, 'food[')).to.be.undefined;
+      expect(get(dummy, 'food]')).to.be.undefined;
+      expect(get(dummy, 'food[.')).to.be.undefined;
+      expect(get(dummy, 'food].')).to.be.undefined;
+      expect(get(dummy, 'food[.]')).to.be.undefined;
+      expect(get(dummy, 'food[a')).to.be.undefined;
+      expect(get(dummy, 'food]a]')).to.be.undefined;
+      expect(get(dummy, 'food[a]')).to.be.undefined;
+    });
+
     it('Returns value of the passed property', function() {
       expect(get(dummy, 'foo')).to.equal(dummy.foo);
       expect(get(dummy, 'user.city')).to.equal(dummy.user.city);
@@ -48,6 +67,12 @@ describe('Saffy', function() {
       expect(get(dummy, 'bar.country', defaultValue)).to.be.equal(defaultValue);
     });
 
+    it('Getting Array property', function() {
+      var cars = dummy.cars;
+
+      expect(get(dummy, 'cars')).to.be.equal(cars);
+    });
+
     it('#firstObject', function() {
       var car = dummy.cars[0];
       var meal = dummy.food[0][0];
@@ -66,11 +91,19 @@ describe('Saffy', function() {
       expect(get(dummy, 'food.lastObject.lastObject')).to.be.equal(meal);
     });
 
-    it.only('#length', function() {
+    it('#length', function() {
       var len = dummy.cars.length;
 
       expect(get(dummy, 'cars.length')).to.be.equal(len);
       expect(get(dummy, 'foo.length')).to.be.undefined;
+    });
+
+    it('Return specific Array item', function() {
+      var car = dummy.cars[2];
+      var meal = dummy.food[1][1];
+
+      expect(get(dummy, 'cars[2]')).to.be.equal(car);
+      expect(get(dummy, 'food[1][1]')).to.be.equal(meal);
     });
   });
 

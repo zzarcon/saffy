@@ -9,7 +9,7 @@ import isObject from 'isobject';
  */
 var get = (obj, keyName, defaultValue) => {
   if (arguments.length < 2 || !isString(keyName)) return;
-
+  
   let properties = keyName.split('.');
   
   if (properties.length === 1) {
@@ -65,27 +65,63 @@ var getNextValues = (obj, properties) => {
 var getProp = (obj, prop) => {
   let isArray = Array.isArray(obj);
   let len = obj.length;
-  
-  if (!isArray) return obj[prop];
 
-  if (prop === 'firstObject') {
-    return obj[0];
+  if (isArray) {
+    if (prop === 'firstObject') {
+      return obj[0];
+    }
+
+    if (prop === 'lastObject') {
+      return obj[len - 1];
+    }
+
+    if (prop === 'length') {
+      return len;
+    }
+
+    if (prop.indexOf('[') > -1) {
+      prop = prop.replace('[', '').replace(']', '');
+    }
   }
 
-  if (prop === 'lastObject') {
-    return obj[len - 1];
-  }
-
-  if (prop === 'length') {
-    return len;
-  }
+  return obj[prop];
 };
 
 var isString = (value) => {
   return typeof value === 'string';
 };
 
+/**
+ * Check and clean params before calling the "get" method
+ * 
+ * TODO: Use rest args
+ * TODO: Check if is a valid keyName
+ */
+var getWrapper = (obj, keyName, defaultValue) => {
+  let isValid = isKeyNameValid(keyName);
+  let wantsArrayItem = keyName.indexOf('[') > -1;
+
+  if (wantsArrayItem) {
+    keyName = keyName.split('[').map((k, i) => {
+      if (i === 0) return k;
+
+      return `.[${k}`;
+    }).join('');
+  }
+
+  return get(obj, keyName, defaultValue);
+};
+
+/**
+ * Implement...
+ * @param  {String} keyName 
+ * @return {Boolean}         
+ */
+var isKeyNameValid = (keyName) => {
+  return true;
+};
+
 export default {
-  get: get,
+  get: getWrapper,
   set: set
 }
