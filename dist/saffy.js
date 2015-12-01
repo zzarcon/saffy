@@ -54,6 +54,19 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	var _arguments2 = arguments;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _isobject = __webpack_require__(1);
+
+	var _isobject2 = _interopRequireDefault(_isobject);
+
 	/**
 	 * TODO: Check if arguments are valid.
 	 *  
@@ -62,12 +75,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {Mixed} defaultValue 
 	 * @return {Mixed}         
 	 */
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	var _arguments2 = arguments;
 	var get = function get(_x, _x2, _x3) {
 	  var _again = true;
 
@@ -82,7 +89,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var properties = keyName.split('.');
 
 	    if (properties.length === 1) {
-	      return obj[keyName] ? obj[keyName] : defaultValue;
+	      var val = getProp(obj, keyName);
+
+	      return val ? val : defaultValue;
 	    }
 
 	    var _getNextValues = getNextValues(obj, properties);
@@ -94,7 +103,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _x2 = nextProps;
 	      _x3 = defaultValue;
 	      _again = true;
-	      properties = _getNextValues = nextObj = nextProps = undefined;
+	      properties = val = _getNextValues = nextObj = nextProps = undefined;
 	      continue _function;
 	    } else {
 	      return defaultValue;
@@ -132,7 +141,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var nextObj = _getNextValues2.nextObj;
 	    var nextProps = _getNextValues2.nextProps;
-	    if (isObject(nextObj)) {
+	    if ((0, _isobject2['default'])(nextObj)) {
 	      _x4 = nextObj;
 	      _x5 = nextProps;
 	      _x6 = value;
@@ -149,17 +158,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var first = properties.shift();
 
 	  return {
-	    nextObj: obj[first],
+	    nextObj: getProp(obj, first),
 	    nextProps: properties.join('.')
 	  };
 	};
 
-	var isString = function isString(value) {
-	  return typeof value === 'string';
+	/**
+	 * 
+	 * @param  {Obj} obj  
+	 * @param  {String} prop 
+	 * @return {Mixed}      
+	 */
+	var getProp = function getProp(obj, prop) {
+	  var val = obj[prop];
+
+	  if (prop === 'firstObject' && Array.isArray(obj)) {
+	    val = obj[0];
+	  }
+
+	  return val;
 	};
 
-	var isObject = function isObject(value) {
-	  return typeof value === 'object';
+	var isString = function isString(value) {
+	  return typeof value === 'string';
 	};
 
 	exports['default'] = {
@@ -167,6 +188,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	  set: set
 	};
 	module.exports = exports['default'];
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*!
+	 * isobject <https://github.com/jonschlinkert/isobject>
+	 *
+	 * Copyright (c) 2014-2015, Jon Schlinkert.
+	 * Licensed under the MIT License.
+	 */
+
+	'use strict';
+
+	var isArray = __webpack_require__(2);
+
+	module.exports = function isObject(o) {
+	  return o != null && typeof o === 'object' && !isArray(o);
+	};
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = Array.isArray || function (arr) {
+	  return Object.prototype.toString.call(arr) == '[object Array]';
+	};
+
 
 /***/ }
 /******/ ])
