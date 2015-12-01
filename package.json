@@ -41,5 +41,8 @@
     "mocha-phantomjs": "^4.0.1",
     "webpack": "~1.4.4",
     "webpack-dev-server": "~1.6.5"
+  },
+  "dependencies": {
+    "isobject": "^2.0.0"
   }
 }

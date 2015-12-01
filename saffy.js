@@ -1,3 +1,4 @@
+import isObject from 'isobject';
 /**
  * TODO: Check if arguments are valid.
  *  
@@ -54,10 +55,6 @@ var getNextValues = (obj, properties) => {
 
 var isString = (value) => {
   return typeof value === 'string';
-};
-
-var isObject = (value) => {
-  return typeof value === 'object';
 };
 
 export default {

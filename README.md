@@ -56,7 +56,3 @@ import {get, set} from 'saffy';
 get(obj, 'user.info.name.firstName');
 
 ```
-
-# Dependencies
-
-None ^^
