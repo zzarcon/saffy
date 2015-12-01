@@ -13,7 +13,9 @@ var get = (obj, keyName, defaultValue) => {
   let properties = keyName.split('.');
   
   if (properties.length === 1) {
-    return obj[keyName] ? obj[keyName] : defaultValue;
+    let val = getProp(obj, keyName);
+
+    return val ? val : defaultValue;
   }
 
   let {nextObj, nextProps} = getNextValues(obj, properties);
@@ -46,11 +48,27 @@ var set = (obj, keyName, value) => {
 
 var getNextValues = (obj, properties) => {
   let first = properties.shift();
-
+  
   return {
-    nextObj: obj[first],
+    nextObj: getProp(obj, first),
     nextProps: properties.join('.')
   };
+};
+
+/**
+ * 
+ * @param  {Obj} obj  
+ * @param  {String} prop 
+ * @return {Mixed}      
+ */
+var getProp = (obj, prop) => {
+  let val = obj[prop];
+  
+  if (prop === 'firstObject' && Array.isArray(obj)) {
+    val = obj[0];
+  }
+
+  return val;
 };
 
 var isString = (value) => {

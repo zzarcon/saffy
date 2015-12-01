@@ -5,6 +5,8 @@ describe('Saffy', function() {
   var microm;
   var value = 'foo';
   var dummy = {
+    cars: ['mercedes', 'bmw', 'audi'],
+    food: [['paella', 'bravas'], ['pizza', 'spaghetti']],
     foo: 1,
     user: {
       city: 'Valencia',
@@ -14,10 +16,12 @@ describe('Saffy', function() {
       }
     }
   };
+  var get = saffy.get;
+  var set = saffy.set;
 
   describe('Get', function() {
     it('Should exist', function() {
-      expect(saffy.get).to.be.a('function');
+      expect(get).to.be.a('function');
     });
 
     it('Check arguments correctness', function() {
@@ -25,29 +29,42 @@ describe('Saffy', function() {
     });
 
     it('Returns value of the passed property', function() {
-      expect(saffy.get(dummy, 'foo')).to.equal(dummy.foo);
-      expect(saffy.get(dummy, 'user.city')).to.equal(dummy.user.city);
-      expect(saffy.get(dummy, 'user.name.firstName')).to.equal(dummy.user.name.firstName);
+      expect(get(dummy, 'foo')).to.equal(dummy.foo);
+      expect(get(dummy, 'user.city')).to.equal(dummy.user.city);
+      expect(get(dummy, 'user.name.firstName')).to.equal(dummy.user.name.firstName);
     });
 
     it("Returns undefined if the property doesn't exist", function() {
-      expect(saffy.get(dummy, 'bar')).to.be.undefined;
-      expect(saffy.get(dummy, 'user.country')).to.be.undefined;
-      expect(saffy.get(dummy, 'bar.country')).to.be.undefined;
+      expect(get(dummy, 'bar')).to.be.undefined;
+      expect(get(dummy, 'user.country')).to.be.undefined;
+      expect(get(dummy, 'bar.country')).to.be.undefined;
     });
 
     it("Returns a default value if the property doesn't exist", function() {
       var defaultValue = value;
 
-      expect(saffy.get(dummy, 'bar', defaultValue)).to.be.equal(defaultValue);
-      expect(saffy.get(dummy, 'user.country', defaultValue)).to.be.equal(defaultValue);
-      expect(saffy.get(dummy, 'bar.country', defaultValue)).to.be.equal(defaultValue);
+      expect(get(dummy, 'bar', defaultValue)).to.be.equal(defaultValue);
+      expect(get(dummy, 'user.country', defaultValue)).to.be.equal(defaultValue);
+      expect(get(dummy, 'bar.country', defaultValue)).to.be.equal(defaultValue);
+    });
+
+    it('#firstObject', function() {
+      var car = dummy.cars[0];
+      var meal = dummy.food[0][0];
+
+      expect(get(dummy, 'cars.firstObject')).to.be.equal(car);
+      expect(get(dummy, 'cars.firstObject.firstObject')).to.be.undefined;
+      expect(get(dummy, 'food.firstObject.firstObject')).to.be.equal(meal);
+    });
+
+    it('#lastObject', function() {
+
     });
   });
 
   describe('Set', function() {
     it('Should exist', function() {
-      expect(saffy.set).to.be.a('function');
+      expect(set).to.be.a('function');
     });
 
     it('Check arguments correctness', function() {
@@ -55,25 +72,25 @@ describe('Saffy', function() {
     });
 
     it('Sets the value on the passed path', function() {
-      saffy.set(dummy, 'bar', value);
+      set(dummy, 'bar', value);
       expect(dummy.bar).to.be.equal(value);
 
-      saffy.set(dummy, 'user.country', value);
+      set(dummy, 'user.country', value);
       expect(dummy.user.country).to.be.equal(value);
     });
 
     it("Only set the value if the keyName it's an object", function() {
-      saffy.set(dummy, 'foo.country', value);
+      set(dummy, 'foo.country', value);
       expect(dummy.foo.country).to.be.equal(undefined);
 
       var nully = {a: null};
-      saffy.set(nully, 'a.b', 23);
+      set(nully, 'a.b', 23);
 
       expect(nully.a).to.be.null;
     });
 
     it('Returns the value of the setted property', function() {
-      expect(saffy.set(dummy, 'foo.country', value)).to.be.equal(value);
+      expect(set(dummy, 'foo.country', value)).to.be.equal(value);
     });
   });
 });
