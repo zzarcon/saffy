@@ -74,3 +74,11 @@ get(obj, 'food[1].lastObject') === 'spaghetti';
 get(obj, 'food[0][1]') === 'bravas';
 
 ```
+
+# Motivation
+
+Inspired by [@sindresorhus](https://github.com/sindresorhus) words...
+
+  > You make small focused modules for reusability and to make it possible to build larger more advanced things that are easier to reason about
+
+Full Post https://github.com/sindresorhus/ama/issues/10#issuecomment-117766328
