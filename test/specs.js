@@ -84,7 +84,7 @@ describe('Saffy', function() {
       expect(get(dummy, 'cars')).to.be.equal(cars);
     });
 
-    it.only('Invoking methods', function() {
+    it('Invoking methods', function() {
       var num = 1;
 
       expect(get(dummy, 'getValue()')).to.be.equal(value);
