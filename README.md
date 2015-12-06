@@ -59,6 +59,7 @@ get(obj, 'user.info.name.firstName');
 
 # Others goodies
 
+**Playing with Arrays**
 ```javascript
 import {get} from 'saffy';
 
@@ -72,6 +73,28 @@ get(obj, 'cars.lastObject') === 'audi';
 get(obj, 'cars[1]') === 'bmw';
 get(obj, 'food[1].lastObject') === 'spaghetti';
 get(obj, 'food[0][1]') === 'bravas';
+get(obj, 'food[0].length') === 2;
+
+```
+
+**Playing with Functions**
+```javascript
+import {get} from 'saffy';
+
+let obj = {
+  foo: 'bar',
+  getFoo: function() {
+    return this.foo;
+  },
+  getHash: function() {
+    return {
+      a: this.foo
+    };
+  }
+}
+
+get(obj, 'getFoo()') === 'bar';
+get(obj, 'getHash().a') === 'bar';
 
 ```
 

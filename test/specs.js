@@ -14,6 +14,17 @@ describe('Saffy', function() {
         firstName: 'hector',
         lastName: 'zarco'
       }
+    },
+    getValue: function() {
+      return value;
+    },
+    sum: function(num) {
+      return value + num;
+    },
+    getHash: function() {
+      return {
+        a: value
+      };
     }
   };
   var get = saffy.get;
@@ -71,6 +82,14 @@ describe('Saffy', function() {
       var cars = dummy.cars;
 
       expect(get(dummy, 'cars')).to.be.equal(cars);
+    });
+
+    it.only('Invoking methods', function() {
+      var num = 1;
+
+      expect(get(dummy, 'getValue()')).to.be.equal(value);
+      expect(get(dummy, 'sum(' + num + ')')).to.be.equal(value + num);
+      expect(get(dummy, 'getHash().a')).to.be.equal(value);
     });
 
     it('#firstObject', function() {
