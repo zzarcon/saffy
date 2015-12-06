@@ -56,3 +56,21 @@ import {get, set} from 'saffy';
 get(obj, 'user.info.name.firstName');
 
 ```
+
+# Others goodies
+
+```javascript
+import {get} from 'saffy';
+
+let obj = {
+  cars: ['mercedes', 'bmw', 'audi'],
+  food: [['paella', 'bravas'], ['pizza', 'spaghetti']]
+}
+
+get(obj, 'cars.firstObject') === 'mercedes';
+get(obj, 'cars.lastObject') === 'audi';
+get(obj, 'cars[1]') === 'bmw';
+get(obj, 'food[1].lastObject') === 'spaghetti';
+get(obj, 'food[0][1]') === 'bravas';
+
+```
