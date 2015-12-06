@@ -192,6 +192,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 
+	  // TODO: Improve way of checking if it's a function
+	  var isFunction = prop.indexOf('(') > -1 && prop.indexOf(')') > -1;
+
+	  if (isFunction) {
+	    var funcInfo = prop.split('(');
+	    var funcName = funcInfo[0];
+
+	    if (typeof obj[funcName] === 'function') {
+	      var funcParams = funcInfo[1].length > 1 ? funcInfo[1].split(')')[0] : undefined;
+	      //TODO: Pass proper type --> number, string, etc
+
+	      return obj[funcName](funcParams);
+	    }
+	  }
+
 	  return obj[prop];
 	};
 
